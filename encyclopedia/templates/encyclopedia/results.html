@@ -1,0 +1,19 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Thy Search Results Senor
+{% endblock %}
+
+{% block body %}
+    <h1>Thy Search Results for "{{ query }}"</h1>
+    
+    {% if results %}
+        <ul>
+            {% for result in results %}
+                <li><a href="{% url 'entry' result %}">{{ result }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+{% endblock %}
