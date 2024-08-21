@@ -3,6 +3,7 @@ import markdown2
 from . import util
 from django.http import HttpResponse
 from .util import save_entry
+from .util import get_entry
 
 def index(request):
     
@@ -11,6 +12,7 @@ def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": entries
     })
+
 
 def entry_page(request, title):
     
@@ -30,6 +32,7 @@ def entry_page(request, title):
         "title": title,
         "content": content_html
     })
+
 
 def search(request):
 
@@ -69,3 +72,32 @@ def new(request):
         return redirect("index")
 
     return render(request, "encyclopedia/new.html")
+
+def edit(request, title):
+    entry = get_entry(title)
+    
+    if entry is None:
+        return render(request, "encyclopedia/error.html", {
+            "error_message": "Page does not exist."
+        })
+
+    if request.method == "POST":
+        form = NewPageForm(request.POST)
+        if form.is_valid():
+            new_title = form.cleaned_data['title']
+            content = form.cleaned_data['content']
+            
+            if title != new_title and title_exists(new_title):
+                return render(request, "encyclopedia/exist.html", {
+                    "error_message": "A page with this title already exists."
+                })
+            
+            save_entry(new_title, content)
+            return redirect('entry', title=new_title)
+    else:
+        form = NewPageForm(initial={'title': title, 'content': entry})
+
+    return render(request, "encyclopedia/edit.html", {
+        "form": form,
+        "title": title
+    })
