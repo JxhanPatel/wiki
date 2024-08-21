@@ -4,6 +4,8 @@ from . import util
 from django.http import HttpResponse
 from .util import save_entry
 from .util import get_entry
+from django import forms
+import random
 
 def index(request):
     
@@ -13,6 +15,10 @@ def index(request):
         "entries": entries
     })
 
+def randomm(request):
+    entries = util.list_entries()
+    random_entry = random.choice(entries)
+    return redirect("entry", title=random_entry) 
 
 def entry_page(request, title):
     
@@ -73,6 +79,17 @@ def new(request):
 
     return render(request, "encyclopedia/new.html")
 
+
+class NewPageForm(forms.Form):
+    title = forms.CharField(label="Title", max_length=100, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Enter the title'
+    }))
+    content = forms.CharField(label="Content", widget=forms.Textarea(attrs={
+        'class': 'form-control',
+        'placeholder': 'Enter the content',
+        'rows': 10
+    }))
 def edit(request, title):
     entry = get_entry(title)
     
