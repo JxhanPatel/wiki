@@ -5,7 +5,11 @@ from django.http import HttpResponse
 from .util import save_entry
 from .util import get_entry
 from django import forms
-import random
+import random    
+from django.shortcuts import render, redirect, reverse
+from django.contrib import messages
+from . import util
+from django.shortcuts import get_object_or_404
 
 def index(request):
     
@@ -15,10 +19,12 @@ def index(request):
         "entries": entries
     })
 
+
 def randomm(request):
     entries = util.list_entries()
     random_entry = random.choice(entries)
     return redirect("entry", title=random_entry) 
+
 
 def entry_page(request, title):
     
@@ -54,7 +60,7 @@ def search(request):
     
     results = [entry for entry in entries if query.lower() in entry.lower()]
     
-    return render(request, "encyclopedia/search.html", {
+    return render(request, "encyclopedia/results.html", {
         "query": query,
         "results": results
     })
@@ -80,41 +86,80 @@ def new(request):
     return render(request, "encyclopedia/new.html")
 
 
-class NewPageForm(forms.Form):
-    title = forms.CharField(label="Title", max_length=100, widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Enter the title'
+# class NewPageForm(forms.Form):
+#     title = forms.CharField(label="Title", max_length=100, widget=forms.TextInput(attrs={
+#         'class': 'form-control',
+#         'placeholder': 'Enter the title'
+#     }))
+#     content = forms.CharField(label="Content", widget=forms.Textarea(attrs={
+#         'class': 'form-control',
+#         'placeholder': 'Enter the content',
+#         'rows': 10
+#     }))
+
+
+class SearchForm(forms.Form):
+    """ Form Class for Search Bar """
+    title = forms.CharField(label='', widget=forms.TextInput(attrs={
+      "class": "search",
+      "placeholder": "Search Qwikipedia"}))
+
+class CreateForm(forms.Form):
+    """ Form Class for Creating New Entries """
+    title = forms.CharField(label='', widget=forms.TextInput(attrs={
+      "placeholder": "Page Title"}))
+    text = forms.CharField(label='', widget=forms.Textarea(attrs={
+      "placeholder": "Enter Page Content using Github Markdown"
     }))
-    content = forms.CharField(label="Content", widget=forms.Textarea(attrs={
-        'class': 'form-control',
-        'placeholder': 'Enter the content',
-        'rows': 10
+
+class EditForm(forms.Form):
+  """ Form Class for Editing Entries """
+  text = forms.CharField(label='', widget=forms.Textarea(attrs={
+      "placeholder": "Enter Page Content using Github Markdown"
     }))
+
+
+
+
 def edit(request, title):
-    entry = get_entry(title)
-    
-    if entry is None:
-        return render(request, "encyclopedia/error.html", {
-            "error_message": "Page does not exist."
+    """ Lets users edit an already existing page on the wiki """
+
+    if request.method == "GET":
+        text = util.get_entry(title)
+
+        if text == None:
+            messages.error(request, f'"{title}"" page does not exist and can\'t be edited, please create a new page instead!')
+
+        return render(request, "encyclopedia/edit.html", {
+          "title": title,
+          "edit_form": EditForm(initial={'text':text}),
+          "search_form": SearchForm()
         })
 
-    if request.method == "POST":
-        form = NewPageForm(request.POST)
-        if form.is_valid():
-            new_title = form.cleaned_data['title']
-            content = form.cleaned_data['content']
-            
-            if title != new_title and title_exists(new_title):
-                return render(request, "encyclopedia/exist.html", {
-                    "error_message": "A page with this title already exists."
-                })
-            
-            save_entry(new_title, content)
-            return redirect('entry', title=new_title)
-    else:
-        form = NewPageForm(initial={'title': title, 'content': entry})
+    elif request.method == "POST":
+        form = EditForm(request.POST)
 
-    return render(request, "encyclopedia/edit.html", {
-        "form": form,
+        if form.is_valid():
+          text = form.cleaned_data['text']
+          util.save_entry(title, text)
+          messages.success(request, f'Entry "{title}" updated successfully!')
+          return redirect(reverse('entry', args=[title]))
+
+        else:
+          messages.error(request, f'Editing form not valid, please try again!')
+          return render(request, "encyclopedia/edit.html", {
+            "title": title,
+            "edit_form": form,
+            "search_form": SearchForm()
+          })
+
+
+def delete_entry(request, title):
+    if request.method == "POST":
+        util.delete_entry(title)
+        messages.success(request, f'Entry "{title}" has been deleted successfully!')
+        return redirect('index')
+    
+    return render(request, "encyclopedia/del_confirm.html", {
         "title": title
     })

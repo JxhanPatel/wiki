@@ -10,5 +10,13 @@
     <div>
         {{ content|safe }}
     </div>
+
+    <!-- delete button
+<form action="{% url 'delete' title %}" method="post" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form> -->
+
+    <a href="{% url 'delete' title %}"><button>Delete</button></a>
     <a href="{% url 'edit' title=title %}"><button>Edit</button></a>
 {% endblock %}

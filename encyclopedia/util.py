@@ -1,8 +1,11 @@
 import re
-
+import os
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ENTRIES_DIR = os.path.join(BASE_DIR, "entries") 
 
 def list_entries():
     """
@@ -35,3 +38,13 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+
+def delete_entry(title):
+    filename = f"{title}.md"
+    filepath = os.path.join(ENTRIES_DIR, filename)
+
+    if os.path.exists(filepath):
+        os.remove(filepath)
+    else:
+        raise FileNotFoundError(f"The entry '{title}' does not exist.")

@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Page</title>
-</head>
-<body>
-    <h1>Edit {{ title }}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save Changes">
-    </form>
-    <a href="{% url 'entry' title %}">Cancel</a>
-</body>
-</html>
+<form method="POST" action="{% url 'edit' title %}">
+    {% csrf_token %}
+    {{ edit_form.as_p }}
+    <button type="submit">Save changes</button>
+</form>

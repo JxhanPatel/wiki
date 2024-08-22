@@ -1,0 +1,7 @@
+<h2>Confirm Deletion</h2>
+<p>Are you sure you want to delete the entry "{{ title }}"?</p>
+<form action="{% url 'delete' title %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, delete</button>
+    <a href="{% url 'entry' title %}" class="btn btn-secondary">Cancel</a>
+</form>
