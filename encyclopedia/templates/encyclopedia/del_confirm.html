@@ -1,7 +1,9 @@
-<h2>Confirm Deletion</h2>
-<p>Are you sure you want to delete the entry "{{ title }}"?</p>
-<form action="{% url 'delete' title %}" method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Yes, delete</button>
-    <a href="{% url 'entry' title %}" class="btn btn-secondary">Cancel</a>
-</form>
+<div style="background-color: #333; padding: 20px; border-radius: 10px;">
+    <h2 style="text-align: center; color: white;">Confirm Deletion</h2>
+    <p style="text-align: center; color: white;">Are you sure you want to delete the entry "{{ title }}"?</p>
+    <form action="{% url 'delete' title %}" method="post" style="text-align: center;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger" style="background-color: red; border-color: red; border-radius: 5px;">Yup! Delete</button>
+        <button href="{% url 'entry' title %}" class="btn btn-secondary" style="border-radius: 5px; background-color: grey;">Cancel</button>
+    </form>
+</div>

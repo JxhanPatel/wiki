@@ -10,19 +10,25 @@
     <body>
         <div class="row">
             <div class="sidebar col-lg-2 col-md-3">
-                <h2>Partial Wiki</h2>
+                <img src="{% static 'encyclopedia/logo2.png' %}" alt="BiasPedia Logo" class="sidebar-logo">
+                <h2>BiasPedia</h2>
+                <div>
+                    <a href="{% url 'index' %}"> 
+                       <button>Home</button>
+                    </a>
+                </div>
                 <form action="{% url 'search' %}" method="get">
-                    <input class="search" type="text" name="q" placeholder="Search Encyclopedia">
+                    <input class="search" type="text" name="q" placeholder="Search BiasPedia">
                     <input type="submit" value="Search">
                 </form>
+                
                 <div>
-                    <a href="{% url 'index' %}">Home</a>
-                </div>
-                <div>
-                    <a href="{% url 'new' %}">Create New Page</a>
+                    <a href="{% url 'new' %}">
+                        <button>Create</button>
+                    </a>
                 </div>
                 <a href="{% url 'random' %}">
-                    <button>Random Page</button>
+                    <button>Random</button>
                 </a>
                 
                 {% block nav %}
