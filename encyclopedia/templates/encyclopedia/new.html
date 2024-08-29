@@ -1,24 +1,29 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-Create New Page
+    Create New Page
 {% endblock %}
 
 {% block body %}
-<h1>Create a New Encyclopedia Entry</h1>
+<div style="background-color: #151015; padding: 50px; border-radius: 10px; max-width: 800px; margin: 0 auto;">
+    <h1 style="text-align: center; color: white;">Create a New Entry</h1>
 
-<form action="{% url 'new' %}" method="post">
-    {% csrf_token %}
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" required><br><br>
+    <form action="{% url 'new' %}" method="post" style="color: white;">
+        {% csrf_token %}
+        <label for="title" style="font-weight: bold;">Title:</label><br>
+        <input type="text" id="title" name="title" required 
+            style="width: 100%; padding: 10px; margin-top: 10px; margin-bottom: 20px; border-radius: 5px; border: none; background-color: #333; color: white;"><br>
 
-    <label for="content">Content:</label><br>
-    <textarea id="content" name="content" rows="10" cols="50" required></textarea><br><br>
+        <label for="content" style="font-weight: bold;">Content:</label><br>
+        <textarea id="content" name="content" rows="10" cols="50" required 
+            style="width: 100%; padding: 10px; margin-top: 10px; margin-bottom: 20px; border-radius: 5px; border: none; background-color: #333; color: white;"></textarea><br>
 
-    <input type="submit" value="Create">
-</form>
+        <input type="submit" value="Create" 
+            style="background-color: #6b4055; color: white; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; font-weight: bold;">
+    </form>
 
-{% if error %}
-    <div class="error">{{ error }}</div>
-{% endif %}
+    {% if error %}
+        <div class="error" style="color: red; margin-top: 20px; text-align: center;">{{ error }}</div>
+    {% endif %}
+</div>
 {% endblock %}

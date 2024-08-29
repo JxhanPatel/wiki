@@ -1,5 +1,20 @@
-<form method="POST" action="{% url 'edit' title %}">
-    {% csrf_token %}
-    {{ edit_form.as_p }}
-    <button type="submit">Save changes</button>
-</form>
+<title>Editing.... {{ title }}.md</title>
+
+
+<div style="background-color: #151015; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 100px;">
+    <div style="background-color: #333; padding: 20px; border-radius: 10px; width: 100%; max-width: 600px;">
+        <h2 style="text-align: center; color: white;">Editing "{{ title }}"</h2>
+        <form method="POST" action="{% url 'edit' title %}" style="text-align: center;">
+            {% csrf_token %}
+            <div style="color: white; text-align: left;">
+                {{ edit_form.as_p }}
+            </div>
+            <button type="submit" style="background-color: #6b4055; color: white; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: bold;">
+                Save changes
+            </button>
+            <a href="{% url 'entry' title %}" class="btn btn-secondary" style="margin-left: 10px; background-color: #aecdcf; color: rgb(0, 0, 0); text-decoration: none; padding: 8px 19px; display: inline-block; font-weight: bold; cursor: pointer; border-radius: 25px;">
+                Cancel
+            </a>
+        </form>
+    </div>
+</div>
