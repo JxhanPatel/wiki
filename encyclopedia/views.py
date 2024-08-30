@@ -6,7 +6,7 @@ from .util import save_entry
 from .util import get_entry
 from django import forms
 import random    
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from . import util
 
