@@ -10,10 +10,10 @@
         <p style="text-align: center; color: white;">Are you sure you want to delete the entry "{{ title }}"?</p>
         <form action="{% url 'delete' title %}" method="post" style="text-align: center;">
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger" style="background-color: red; border-color: darkred; border-radius: 25px; padding: 10px 20px; color: white; font-weight: bold; cursor: pointer;">
+            <button type="submit" class="btn btn-danger" style="background-color: red; border-color: darkred; border-radius: 25px; padding: 10px 20px; color: white;  cursor: pointer;">
                 Yup! Delete
             </button>
-            <a href="{% url 'entry' title %}" class="btn btn-secondary" style="border-radius: 25px; background-color: #6b4055; color: white; text-decoration: none; padding: 10px 20px; display: inline-block; font-weight: bold; cursor: pointer;">
+            <a href="{% url 'entry' title %}" class="btn btn-secondary" style="border-radius: 25px; background-color: #61614b; color: white; text-decoration: none; padding: 10px 20px; display: inline-block; cursor: pointer;">
                 Cancel
             </a>
         </form>

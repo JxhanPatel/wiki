@@ -6,10 +6,10 @@ from .util import save_entry
 from .util import get_entry
 from django import forms
 import random    
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from . import util
-from django.shortcuts import get_object_or_404
+
 
 def index(request):
     

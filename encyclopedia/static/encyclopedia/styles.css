@@ -1,5 +1,5 @@
 body {
-    background-color: #151015;
+    background-color: #090708;
     color: #e0e0e0;
     font-family: 'Trebuchet MS', sans-serif;
 }
@@ -39,10 +39,10 @@ h2 {
 .search-btn {
     width: 100%;
     padding: 10px;
-    background-color: #aecdcf;
+    background-color: #bbdac0;
     border: none;
     border-radius: 15px;
-    color: #161515;
+    color: #2d2b2d;
     font-weight: bold;
     cursor: pointer;
     margin-bottom: 140px;
@@ -58,10 +58,10 @@ h2 {
 .home-btn {
     width: 100%;
     padding: 10px;
-    background-color: #b2957e;
+    background-color: #96a388;
     border: none;
     border-radius: 55px;
-    color: #fff;
+    color: #322f2f;
     font-weight: bold;
     cursor: pointer;
     margin-bottom: 0px;
@@ -70,11 +70,10 @@ h2 {
 .create-btn, .random-btn {
     width: 100%;
     padding: 5px;
-    background-color: #6b4055;
+    background-color: #61614b;
     border: none;
     border-radius: 25px;
     color: #fff;
-    font-weight: bold;
     cursor: pointer;
     margin-right: 2%;
 }
