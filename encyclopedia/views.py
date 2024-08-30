@@ -99,13 +99,11 @@ def new(request):
 
 
 class SearchForm(forms.Form):
-    """ Form Class for Search Bar """
     title = forms.CharField(label='', widget=forms.TextInput(attrs={
       "class": "search",
       "placeholder": "Search Qwikipedia"}))
 
 class CreateForm(forms.Form):
-    """ Form Class for Creating New Entries """
     title = forms.CharField(label='', widget=forms.TextInput(attrs={
       "placeholder": "Page Title"}))
     text = forms.CharField(label='', widget=forms.Textarea(attrs={
@@ -113,7 +111,6 @@ class CreateForm(forms.Form):
     }))
 
 class EditForm(forms.Form):
-  """ Form Class for Editing Entries """
   text = forms.CharField(label='', widget=forms.Textarea(attrs={
       "placeholder": "Enter Page Content using Github Markdown"
     }))
@@ -122,7 +119,6 @@ class EditForm(forms.Form):
 
 
 def edit(request, title):
-    """ Lets users edit an already existing page on the wiki """
 
     if request.method == "GET":
         text = util.get_entry(title)
